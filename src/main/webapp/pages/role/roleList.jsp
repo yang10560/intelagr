@@ -1,35 +1,37 @@
-
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html style="width:100%;height:100%;overflow:hidden">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>角色管理-五常优质水稻溯源监管平台</title>
-    <link rel="stylesheet" type="text/css" href="../../style/index.css">
-    <link rel="stylesheet" type="text/css" href="../../js/themes/default/easyui.css">
-    <link rel="stylesheet" type="text/css" href="../../js/themes/icon.css">
-    <link rel="stylesheet" type="text/css" href="../../js/themes/color.css">
-    <script type="text/javascript" src="../../js/jquery.min.js"></script>
-    <script type="text/javascript" src="../../js/common.js"></script>
-    <script type="text/javascript" src="../../js/form2js.js"></script>
-    <script type="text/javascript" src="../../js/json2.js"></script>
-    <script type="text/javascript" src="../../js/jquery.easyui.min.js"></script>
-    <script type="text/javascript" src="../../js/easyui-lang-zh_CN.js"></script>
+    <% String APP_PATH = request.getContextPath(); %>
+    <link rel="stylesheet" type="text/css" href="<%=APP_PATH %>/style/index.css">
+    <link rel="stylesheet" type="text/css" href="<%=APP_PATH %>/js/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="<%=APP_PATH %>/js/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="<%=APP_PATH %>/js/themes/color.css">
+    <script type="text/javascript" src="<%=APP_PATH %>/js/jquery.min.js"></script>
+    <script type="text/javascript" src="<%=APP_PATH %>/js/common.js"></script>
+    <script type="text/javascript" src="<%=APP_PATH %>/js/form2js.js"></script>
+    <script type="text/javascript" src="<%=APP_PATH %>/js/json2.js"></script>
+    <script type="text/javascript" src="<%=APP_PATH %>/js/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="<%=APP_PATH %>/js/easyui-lang-zh_CN.js"></script>
 </head>
 <body class="easyui-layout">
 <div region="center" border="false" style="padding:5px;">
     <fieldset id="queryBlock" class="fieldset_common_style">
-        <form id="roleform" name="roleform" method="post" action="../../role/list?flag=2">
+        <form id="roleform" name="roleform" method="post" action="<%=APP_PATH %>/role/list?flag=2">
             <table class="table_common_style">
                 <tr>
                     <td class="table_common_td_label_query_style">角色编号：</td>
                     <td class="table_common_td_txt_query_style">
-                        <input name="roleCode" value="" class="easyui-textbox" style="width:200px;height:25px;">
-                        <input type='hidden' id="pageTotal" name="pageTotal" value="6"/>
-                        <input type="hidden" id="page" name="page" value="1">
-                        <input type="hidden" id="pageSize" name="pageSize" value="15">
+                        <input name="roleCode" value="${queryRoleMap['roleCode']}" class="easyui-textbox" style="width:200px;height:25px;">
+                        <input type='hidden' id="pageTotal" name="pageTotal" value="${pageInfo.total}"/>
+                        <input type="hidden" id="page" name="page" value="${pageInfo.pageNum}">
+                        <input type="hidden" id="pageSize" name="pageSize" value="${pageInfo.pageSize}">
                     </td>
                     <td class="table_common_td_label_query_style">角色色称：</td>
                     <td class="table_common_td_txt_query_style">
-                        <input name="roleName" value="" class="easyui-textbox" style="width:200px;height:25px">
+                        <input name="roleName" value="${queryRoleMap['roleName']}" class="easyui-textbox" style="width:200px;height:25px">
                     </td>
                     <td align="right" valign="bottom">
                         <a href="#" class="easyui-linkbutton" onclick="onSubmit()">
@@ -77,7 +79,7 @@
         </table>
     </fieldset>
     <table id="data" class="easyui-datagrid" striped="true" checkbox="true" singleSelect="false" singleSelect="true"
-           pageSize="15" pageNumber="1">
+           pageSize="${pageInfo.pageSize}" pageNumber="${pageInfo.pageSize}">
         <thead>
         <tr>
             <th field="id" width="140" checkbox="true" align="center">id</th>
@@ -88,42 +90,14 @@
         </thead>
         <tbody>
 
-
-        <tr>
-            <td height="30" align="center" nowrap>21</td>
-            <td height="30" align="center" nowrap>R003</td>
-            <td height="30" align="center" nowrap>农业局</td>
-            <td height="30" align="center" nowrap></td>
-        </tr>
-
-        <tr>
-            <td height="30" align="center" nowrap>20</td>
-            <td height="30" align="center" nowrap>R002</td>
-            <td height="30" align="center" nowrap>粮食企业</td>
-            <td height="30" align="center" nowrap></td>
-        </tr>
-
-        <tr>
-            <td height="30" align="center" nowrap>19</td>
-            <td height="30" align="center" nowrap>R001</td>
-            <td height="30" align="center" nowrap>育种企业</td>
-            <td height="30" align="center" nowrap></td>
-        </tr>
-
-        <tr>
-            <td height="30" align="center" nowrap>18</td>
-            <td height="30" align="center" nowrap>jfly</td>
-            <td height="30" align="center" nowrap>jfly</td>
-            <td height="30" align="center" nowrap>金福粮油</td>
-        </tr>
-
-        <tr>
-            <td height="30" align="center" nowrap>1</td>
-            <td height="30" align="center" nowrap>admin</td>
-            <td height="30" align="center" nowrap>系统管理组</td>
-            <td height="30" align="center" nowrap>管理组</td>
-        </tr>
-
+        <c:forEach items="${pageInfo.list}" var="r">
+            <tr>
+                <td height="30" align="center" nowrap>${r.id}</td>
+                <td height="30" align="center" nowrap>${r.roleCode}</td>
+                <td height="30" align="center" nowrap>${r.roleName}</td>
+                <td height="30" align="center" nowrap>${r.remark}</td>
+            </tr>
+        </c:forEach>
         </tbody>
     </table>
 </div>
@@ -139,7 +113,7 @@
             rownumbers: true,
             fitColumns: true,
             //fit: true,
-            pageList: [15, 20, 25],
+            pageList: [5,10,15, 20],
             pagePosition: "top"
         });
 
@@ -164,7 +138,7 @@
             height: 260,
             closed: false,
             cache: false,
-            href: 'addRole.html',
+            href: '<%=APP_PATH%>/pages/role/addRole.jsp',
             modal: true
         });
     }
@@ -191,7 +165,7 @@
             height: 260,
             closed: false,
             cache: false,
-            href: '../../role/editRoleInit?id=' + id,
+            href: '<%=APP_PATH %>/role/editRoleInit?id=' + id,
             modal: true
         });
     }
@@ -214,7 +188,7 @@
             height: 230,
             closed: false,
             cache: false,
-            href: '../../role/detail?id=' + id,
+            href: '<%=APP_PATH %>/role/detail?id=' + id,
             modal: true
         });
     }

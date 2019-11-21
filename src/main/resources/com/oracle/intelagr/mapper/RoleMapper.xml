@@ -28,6 +28,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			select RoleCode from m_userrolemap where UserID = #{userId}
 		)
 	</select>
+
+
+	<select id="getRolesByRoleCodeOrRoleName" resultType="role">
+		select * from m_role
+		<where>
+			DeleteFlag = 'N'
+			<if test="roleCode != null  and roleCode != ''">
+				and roleCode = #{roleCode}
+			</if>
+			<if test="roleName != null  and roleName != ''">
+				and roleName = #{roleName}
+			</if>
+		</where>
+
+	</select>
 	
 	
 	

@@ -98,10 +98,9 @@ public class UserServiceImpl implements UserService {
 
         PageHelper.startPage(page, pageSize, true, true, false);
         try {
-            PageInfo<User> studentPageInfo = new PageInfo<>(userMapper.getAllUserWithInfo(userID, userName, type));
-//            studentPageInfo.setPageNum(pageNo);
+            PageInfo<User> userPageInfo = new PageInfo<>(userMapper.getAllUserWithInfo(userID, userName, type));
 
-            return studentPageInfo;
+            return userPageInfo;
         } catch (Exception e) {
             e.printStackTrace();
             return null;

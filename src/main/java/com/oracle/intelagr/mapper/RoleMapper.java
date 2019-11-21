@@ -1,6 +1,7 @@
 package com.oracle.intelagr.mapper;
 
 import com.oracle.intelagr.entity.Role;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -20,5 +21,7 @@ public interface RoleMapper {
      * @return
      */
    List<Role> getRolesByUserId(String userId);
-	
+
+
+    List<Role> getRolesByRoleCodeOrRoleName(@Param("roleCode") String roleCode, @Param("roleName") String roleName);
 }
