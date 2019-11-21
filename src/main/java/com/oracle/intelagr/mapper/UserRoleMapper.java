@@ -14,4 +14,12 @@ public interface UserRoleMapper {
 
 
     boolean deleteRolesByUserId(String userID);
+
+
+    /**
+     * 更新roldCode
+     * @param parms
+     * @return
+     */
+    boolean updateRoleCodeByOldRoleCode(Map<String,Object> parms);
 }

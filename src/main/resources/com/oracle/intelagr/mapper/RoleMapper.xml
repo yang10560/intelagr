@@ -43,11 +43,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</where>
 
 	</select>
+
+	<insert id="saveRole" parameterType="java.util.Map">
+		INSERT INTO m_role(rolecode,rolename,Remark,CreateUserId,CreateDate,UpdateUserId,UpdateDate)
+		values(#{roleCode},#{roleName},#{remark},#{createUserId},#{createDate},#{updateUserId},#{updateDate})
+	</insert>
 	
-	
-	
-	
-	
+	<select id="getRoleById" resultType="role">
+		select * from m_role where id = #{id}
+	</select>
+
+	<update id="updateRole" parameterType="java.util.Map">
+		update m_role
+		<set>
+			<if test="roleCode != null  and roleCode != ''">
+				 roleCode = #{roleCode},
+			</if>
+			<if test="roleName != null  and roleName != ''">
+				 roleName = #{roleName},
+			</if>
+			<if test="remark != null  and remark != ''">
+				remark = #{remark},
+			</if>
+			updateDate = now()
+		</set>
+		where id = #{id}
+	</update>
 	
 	
 	
