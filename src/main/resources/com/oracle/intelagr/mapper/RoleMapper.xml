@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.oracle.intelagr.mapper.RoleMapper">
+	
+	<resultMap type="role" id="roleResultMap">
+		<id column="ID" property="id"/>
+		<result column="RoleCode" property="roleCode"/>
+		<result column="RoleName" property="roleName"/>
+		<result column="Remark" property="remark"/>
+		<result column="DeleteFlag" property="deleteFlag"/>
+		<result column="CreateUserId" property="createUserId"/>
+		<result column="CreateDate" property="createDate"/>
+		<result column="UpdateUserId" property="updateUserId"/>
+		<result column="UpdateDate" property="updateDate"/>
+	</resultMap>
+
+
+	<select id="getAllRoles" resultMap="roleResultMap">
+		select * from m_role where DeleteFlag = 'N';
+	</select>
+	
+	
+	<select id="getRolesByUserId" resultMap="roleResultMap">
+		select * from m_role where DeleteFlag = 'N' and RoleCode In(
+			select RoleCode from m_userrolemap where UserID = #{userId}
+		)
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+</mapper>

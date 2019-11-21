@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oracle.intelagr.mapper.UserMapper">
+
+
+    <select id="getUserByUserIdWithPassword" resultType="user">
+        select * from m_user where userid = #{userID} and password = #{password}
+    </select>
+
+    <resultMap type="user" id="userResultMap">
+        <id column="id" property="id"/>
+        <result column="UserID" property="userID"/>
+        <result column="Password" property="password"/>
+        <result column="UserName" property="userName"/>
+        <result column="UserType" property="userType"/>
+        <result column="CompanyCode" property="companyCode"/>
+        <result column="CompanyName" property="companyName"/>
+        <result column="Tel" property="tel"/>
+        <result column="Email" property="email"/>
+        <result column="Remark" property="remark"/>
+        <result column="DeleteFlag" property="deleteFlag"/>
+        <result column="CreateUserId" property="createUserId"/>
+        <result column="CreateDate" property="createDate"/>
+        <result column="UpdateUserId" property="updateUserId"/>
+        <result column="UpdateDate" property="updateDate"/>
+
+        <collection property="roles" column="RoleCode" ofType="role">
+            <result column="RoleCode" property="roleCode"/>
+            <result column="RoleName" property="roleName"/>
+            <result column="Remark" property="remark"/>
+            <result column="DeleteFlag" property="deleteFlag"/>
+
+            <collection property="functions" column="FunctionCode" ofType="function">
+                <result column="ModuleCode" property="moduleCode"/>
+                <result column="ModuleName" property="moduleName"/>
+                <result column="ModuleDispSeq" property="moduleDispSeq"/>
+                <result column="FunctionCode" property="functionCode"/>
+                <result column="FunctionName" property="functionName"/>
+                <result column="FunctionDispSeq" property="functionDispSeq"/>
+                <result column="FunctionURL" property="functionURL"/>
+                <result column="FunctionIcon" property="functionIcon"/>
+            </collection>
+        </collection>
+
+
+    </resultMap>
+
+    <!-- 根据 用户id 查询 菜单 -->
+
+    <select id="getUserRoleFunction" resultMap="userResultMap">
+
+	SELECT * FROM m_user u
+ 	 	left OUTER join m_userrolemap ur ON u.UserID = ur.UserID
+		LEFT OUTER JOIN m_rolefunctionmap rf on rf.RoleCode = ur.RoleCode
+		left OUTER JOIN m_function f on f.FunctionCode = rf.FunctionCode
+     		WHERE u.UserID = #{id}
+	</select>
+
+
+    <!--更新信息-->
+    <update id="updateUser" parameterType="user">
+        update m_user
+        <set>
+            <if test="userName != null and userName !=''">
+                userName = #{userName},
+            </if>
+            <if test="tel != null and tel !=''">
+                tel = #{tel},
+            </if>
+            <if test="email != null and email !=''">
+                email = #{email},
+            </if>
+
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--更新用户 updateUserPro 多字段-->
+    <update id="updateUserPro" parameterType="user">
+        update m_user
+        <set>
+            <if test="userID != null and userID !=''">
+                userID = #{userID},
+            </if>
+            <if test="password != null and password !=''">
+                password = #{password},
+            </if>
+            <if test="password != null and password !=''">
+                password = #{password},
+            </if>
+            <if test="userName != null and userName !=''">
+                userName = #{userName},
+            </if>
+            <if test="companyName != null and companyName !=''">
+                companyName = #{companyName},
+            </if>
+            <if test="tel != null and tel !=''">
+                tel = #{tel},
+            </if>
+            <if test="email != null and email !=''">
+                email = #{email},
+            </if>
+            <if test="remark != null and remark !=''">
+                remark = #{remark},
+            </if>
+            <if test="companyCode != null and companyCode !=''">
+                companyCode = #{companyCode},
+            </if>
+
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--更新密码-->
+    <update id="updatePwd" parameterType="user">
+        update m_user
+        <set>
+            <if test="password != null and password !=''">
+                password = #{password},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+
+    <!--id查User-->
+    <select id="getUserById" resultType="user">
+	  SELECT * FROM m_user WHERE id = #{id}
+	</select>
+
+
+    <resultMap type="user" id="userResultMapWithInfo">
+        <id column="id" property="id"/>
+        <result column="UserID" property="userID"/>
+        <result column="Password" property="password"/>
+        <result column="UserName" property="userName"/>
+        <result column="ut" property="userType"/>
+        <result column="CompanyCode" property="companyCode"/>
+        <result column="CompanyName" property="companyName"/>
+        <result column="Tel" property="tel"/>
+        <result column="Email" property="email"/>
+        <result column="Remark" property="remark"/>
+        <result column="ls" property="loginStatus"/>
+        <result column="DeleteFlag" property="deleteFlag"/>
+        <result column="CreateUserId" property="createUserId"/>
+        <result column="CreateDate" property="createDate"/>
+        <result column="UpdateUserId" property="updateUserId"/>
+        <result column="UpdateDate" property="updateDate"/>
+    </resultMap>
+
+    <!--查询所有带信息-->
+    <select id="getAllUserWithInfo" resultMap="userResultMapWithInfo">
+        SELECT u.*,cd.codevalue AS ut,cd1.codevalue AS ls FROM m_user u
+        LEFT OUTER JOIN commondata cd ON (cd.codecode = u.`UserType` AND cd.codekey='UserType' )
+        LEFT OUTER JOIN commondata cd1 ON (cd1.codecode = u.`LoginStatus` AND cd1.codekey='LoginStatus')
+        <where>
+            u.`DeleteFlag`='N'
+            <if test="userId != null and userId != ''">
+                and userId = #{userId}
+            </if>
+            <if test="userName != null and userName != ''">
+                and userName = #{userName}
+            </if>
+            <if test="type != null and type != ''">
+                and userType = #{type}
+            </if>
+        </where>
+    </select>
+
+    <!--设置用户登录状态-->
+    <update id="setLoginStatus">
+        update m_user set LoginStatus = #{loginStatus} where  id = #{id}
+    </update>
+
+    <!--设置用户登录状态-->
+    <update id="deleteUser">
+        update m_user set DeleteFlag = 'Y' where  id = #{id}
+    </update>
+
+    <select id="getUserTypes" resultType="Map">
+        select CodeCode,CodeValue from commondata where CodeKey='UserType'
+    </select>
+
+    <!--添加用户-->
+    <sql id="userColumns">
+		UserID,
+		Password,
+		UserName,
+		UserType,
+		CompanyCode,
+		CompanyName,
+		Tel,
+		Email,
+		LoginStatus,
+		LastSignTime,
+		Remark,
+		DeleteFlag,
+		CreateUserId,
+		CreateDate,
+		UpdateUserId,
+		UpdateDate
+	</sql>
+
+    <insert id="addUser">
+        insert into m_user(
+        <include refid="userColumns"></include>
+        ) values(#{userID},#{password},#{userName},#{userType},#{companyCode},#{companyName},#{tel},#{email},'01',null,#{remark},'N',#{createUserId},#{createDate},#{updateUserId},#{updateDate})
+    </insert>
+
+
+</mapper>

@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oracle.intelagr.mapper.UserRoleMapper">
+
+	<insert id="addUserRole" parameterType="userRole">
+		insert into m_userrolemap(roleCode,userID,remark,DeleteFlag,
+		CreateUserId,
+		CreateDate,
+		UpdateUserId,
+		UpdateDate)
+		 values(#{roleCode},#{userID},#{remark},'N',#{createUserId},#{createDate},#{updateUserId},#{updateDate})
+			
+	</insert>
+
+
+	<delete id="deleteRolesByUserId" >
+		delete from m_userrolemap where UserID = #{userID}
+	</delete>
+
+
+
+
+
+
+
+</mapper>

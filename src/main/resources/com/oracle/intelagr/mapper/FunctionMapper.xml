@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.oracle.intelagr.mapper.FunctionMapper">
+	
+	<resultMap type="function" id="functionResultMap">
+		<id column="id" property="id"/>
+		<result column="ModuleCode" property="moduleCode"/>
+		<result column="ModuleName" property="moduleName"/>
+		<result column="ModuleDispSeq" property="moduleDispSeq"/>
+		<result column="FunctionCode" property="functionCode"/>
+		<result column="FunctionName" property="functionName"/>
+		<result column="FunctionDispSeq" property="functionDispSeq"/>
+		<result column="FunctionURL" property="functionURL"/>
+		<result column="FunctionIcon" property="functionIcon"/>
+		<result column="Remark" property="remark"/>
+		<result column="DeleteFlag" property="deleteFlag"/>
+		<result column="CreateUserId" property="createUserId"/>
+		<result column="CreateDate" property="createDate"/>
+		<result column="UpdateUserId" property="updateUserId"/>
+		<result column="UpdateDate" property="updateDate"/>
+	</resultMap>
+	
+	
+
+	
+	
+</mapper>
