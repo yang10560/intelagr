@@ -38,4 +38,8 @@ public interface RoleService {
     Role getRoleById(String id);
 
     boolean UpateRole(HttpSession session, Map<String, Object> parms);
+
+    boolean saveRoleAuth(HttpSession session,String roleCode, String[] funIds);
+
+    boolean deleteRole(Integer[] ids);
 }

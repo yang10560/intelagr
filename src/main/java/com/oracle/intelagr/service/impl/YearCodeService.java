@@ -8,8 +8,11 @@ import com.oracle.intelagr.entity.YearCode;
 import com.oracle.intelagr.mapper.YearCodeMapper;
 import com.oracle.intelagr.service.IYearCodeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-
+@Service
+@Transactional
 public class YearCodeService implements IYearCodeService {
     @Autowired
     private YearCodeMapper yearCodeMapper;

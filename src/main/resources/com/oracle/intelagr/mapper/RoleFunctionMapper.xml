@@ -1,19 +1,26 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.oracle.intelagr.mapper.RoleFunctionMapper">
 
 
-	<update id="updateRoleCodeByOldRoleCode" parameterType="java.util.Map">
+    <update id="updateRoleCodeByOldRoleCode" parameterType="java.util.Map">
 		update m_rolefunctionmap set RoleCode = #{roleCode} where RoleCode = #{oldRoleCode}
 	</update>
-	
-	<select id="getFunctionCodeByRoleCode" resultType="String">
+
+    <select id="getFunctionCodeByRoleCode" resultType="String">
 		select FunctionCode from m_rolefunctionmap where DeleteFlag = 'N' and RoleCode = #{roleCode}
 	</select>
 
+    <delete id="delete">
+		delete from m_rolefunctionmap where RoleCode = #{roleCode}
+	</delete>
 
+    <insert id="insert" parameterType="java.util.Map">
+		insert into m_rolefunctionmap(id,RoleCode,FunctionCode,Remark,DeleteFlag,CreateUserId,CreateDate,UpdateUserId,UpdateDate)
+		values (null,#{roleCode},#{fid},'','N',#{createUserId},now(),#{updateUserId},now())
+	</insert>
 
 
 </mapper>

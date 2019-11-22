@@ -69,7 +69,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</set>
 		where id = #{id}
 	</update>
-	
+
+
+	 <delete id="delete">
+		 delete from m_role where id =  #{id}
+	 </delete>
+
 	
 	
 </mapper>

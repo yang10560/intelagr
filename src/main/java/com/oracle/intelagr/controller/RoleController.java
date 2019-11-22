@@ -34,6 +34,7 @@ public class RoleController {
 
     /**
      * 查询
+     *
      * @param roleCode
      * @param roleName
      * @param page
@@ -46,7 +47,7 @@ public class RoleController {
                              @RequestParam(value = "page", defaultValue = "1") String page,
                              @RequestParam(value = "pageSize", defaultValue = "5") String pageSize) {
 
-         Map<String, String> queryMap = new HashMap<>();
+        Map<String, String> queryMap = new HashMap<>();
         queryMap.put("roleCode", roleCode);
         queryMap.put("roleName", roleName);
 
@@ -62,7 +63,7 @@ public class RoleController {
 
     @RequestMapping("/addRole")
     @ResponseBody
-    public JsonResult addRole(HttpSession session,@RequestBody Map<String, Object> parms){
+    public JsonResult addRole(HttpSession session, @RequestBody Map<String, Object> parms) {
 
         JsonResult jsonResult = new JsonResult(roleService.saveRole(session, parms));
 
@@ -70,20 +71,18 @@ public class RoleController {
     }
 
 
-
     @RequestMapping("/editRoleInit")
-    public ModelAndView editRoleInit(String id){
+    public ModelAndView editRoleInit(String id) {
         Role role = roleService.getRoleById(id);
         ModelAndView mv = new ModelAndView("role/editRole");
-        mv.addObject("updateRole",role);
+        mv.addObject("updateRole", role);
         return mv;
     }
 
 
-
     @RequestMapping("/updateRole")
     @ResponseBody
-    public JsonResult updateRole(HttpSession session,@RequestBody Map<String, Object> parms){
+    public JsonResult updateRole(HttpSession session, @RequestBody Map<String, Object> parms) {
 
         JsonResult jsonResult = new JsonResult(roleService.UpateRole(session, parms));
 
@@ -92,23 +91,28 @@ public class RoleController {
 
     @RequestMapping("/delete")
     @ResponseBody
-    public JsonResult deleteRole(@RequestParam("ids[]")Integer[] ids){
+    public JsonResult deleteRole(@RequestParam("ids[]") Integer[] ids) {
 
         //sonResult jsonResult = new JsonResult(roleService.UpateRole(session, parms));
 
-        //TODO
-        System.out.println(Arrays.toString(ids));
-        return new JsonResult(true);
+
+       boolean b =  roleService.deleteRole(ids);
+        //System.out.println(Arrays.toString(ids));
+        if(b){
+            return new JsonResult(true,"删除成功");
+        }
+        return new JsonResult(false,"删除失败");
     }
 
 
     /**
      * 跳转权限页
+     *
      * @param id
      * @return
      */
     @RequestMapping("/roleAuth")
-    public ModelAndView roleAuth(@RequestParam("id")String id){
+    public ModelAndView roleAuth(@RequestParam("id") String id) {
 
         Role role = roleService.getRoleById(id);
 
@@ -124,15 +128,37 @@ public class RoleController {
 
         String jsonResult = jsonArray.toString();
 
-        mv.addObject("role",role);
-        mv.addObject("jsonResult",jsonResult);
+        mv.addObject("role", role);
+        mv.addObject("jsonResult", jsonResult);
 
         return mv;
-
 
     }
 
 
+    /**
+     * 保存权限
+     *
+     * @param
+     * @return
+     */
+    @RequestMapping("/saveRoleAuth")
+    @ResponseBody
+    public JsonResult saveRoleAuth(HttpSession session, @RequestParam("roleCode") String roleCode, @RequestParam("funIds[]") String[] funIds) {
+
+
+        // System.out.println(map);
+        System.out.println(roleCode);
+        System.out.println(Arrays.toString(funIds));
+        boolean b = roleService.saveRoleAuth(session, roleCode, funIds);
+
+        if (b) {
+            return new JsonResult(true, "操作成功");
+        }
+
+        return new JsonResult(false, "操作失败");
+
+    }
 
 
 }

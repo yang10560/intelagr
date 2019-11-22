@@ -19,4 +19,14 @@ public interface RoleFunctionMapper {
      * @return
      */
     List<String> getFunctionCodeByRoleCode(String roleCode);
+
+    /**
+     * 删除记录
+     * @param roleCode
+     * @return
+     */
+    boolean delete(String roleCode);
+
+
+    boolean insert(Map<String,String> map);
 }

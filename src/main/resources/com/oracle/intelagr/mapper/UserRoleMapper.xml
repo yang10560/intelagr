@@ -24,6 +24,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		update m_userrolemap set RoleCode = #{roleCode} where RoleCode = #{oldRoleCode}
 	</update>
 
+	<delete id="deleteByRoleCode">
+		delete from  m_rolefunctionmap where RoleCode = #{roldCode}
+	</delete>
+
 
 
 

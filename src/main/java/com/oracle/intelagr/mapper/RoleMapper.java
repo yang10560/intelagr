@@ -41,4 +41,11 @@ public interface RoleMapper {
      * @return
      */
     boolean updateRole(Map<String, Object> parms);
+
+    /**
+     * 删除角色
+     * @param id
+     * @return
+     */
+    boolean delete(Integer id);
 }

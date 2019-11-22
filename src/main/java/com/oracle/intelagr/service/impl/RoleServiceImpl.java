@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpSession;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -84,5 +85,37 @@ public class RoleServiceImpl implements RoleService {
         boolean c = roleFunctionMapper.updateRoleCodeByOldRoleCode(parms);//更新菜单表关联的角色
 
         return a && b && c;
+    }
+
+    @Override
+    public boolean saveRoleAuth(HttpSession session, String roleCode, String[] funIds) {
+
+        User user = (User) session.getAttribute("user");
+        boolean a = roleFunctionMapper.delete(roleCode);
+
+        Map<String, String> params = new HashMap<>();
+        for (String funId : funIds) {
+            params.put("createUserId", user.getUserID());
+            params.put("updateUserId", user.getUserID());
+            params.put("roleCode", roleCode);
+            params.put("fid", funId);
+            roleFunctionMapper.insert(params);
+        }
+        return a;
+    }
+
+
+    @Override
+    public boolean deleteRole(Integer[] ids) {
+
+        for (Integer id : ids) {
+            Role r = roleMapper.getRoleById(id.toString());
+            String roleCode = r.getRoleCode();
+            roleFunctionMapper.delete(roleCode);//删除角色菜单映射
+            userRoleMapper.deleteByRoleCode(roleCode);//删除用户角色映射
+            roleMapper.delete(id);//删除role
+        }
+
+        return true;
     }
 }

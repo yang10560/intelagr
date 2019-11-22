@@ -9,9 +9,11 @@ import com.oracle.intelagr.mapper.ServialNumMapper;
 import com.oracle.intelagr.service.IServialNumService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
+@Transactional
 public class ServialNumService implements IServialNumService {
     @Autowired
     private ServialNumMapper servailNumMapper;

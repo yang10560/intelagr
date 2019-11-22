@@ -22,4 +22,11 @@ public interface UserRoleMapper {
      * @return
      */
     boolean updateRoleCodeByOldRoleCode(Map<String,Object> parms);
+
+    /**
+     * 删除
+     * @param roleCode
+     * @return
+     */
+    boolean deleteByRoleCode(String roleCode);
 }
