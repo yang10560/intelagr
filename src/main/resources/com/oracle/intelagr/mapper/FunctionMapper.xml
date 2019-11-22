@@ -22,9 +22,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="UpdateUserId" property="updateUserId"/>
 		<result column="UpdateDate" property="updateDate"/>
 	</resultMap>
-	
-	
 
-	
+
+
+	<select id="getAllFunctionModuleCode" resultType="String">
+		SELECT DISTINCT moduleCode FROM m_function where DeleteFlag = 'N'
+	</select>
+
+	<select id="getFunctionByModuleCode" resultMap="functionResultMap">
+		select * from m_function where moduleCode = #{moduleCode} and DeleteFlag = 'N'
+	</select>
+
+
+	<select id="getRoleFuctions" resultMap="functionResultMap">
+		select * from m_function where  DeleteFlag = 'N' and FunctionCode IN
+		(select FunctionCode from m_rolefunctionmap where DeleteFlag = 'N' and RoleCode = #{roleCode})
+	</select>
+
+
 	
 </mapper>

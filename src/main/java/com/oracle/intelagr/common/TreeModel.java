@@ -78,4 +78,18 @@ public class TreeModel {
 	public void setChildren(List<TreeModel> children) {
 		this.children = children;
 	}
+
+
+    @Override
+    public String toString() {
+        return "TreeModel{" +
+                "id='" + id + '\'' +
+                ", pid='" + pid + '\'' +
+                ", text='" + text + '\'' +
+                ", iconCls='" + iconCls + '\'' +
+                ", state='" + state + '\'' +
+                ", checked='" + checked + '\'' +
+                ", attributes=" + attributes +
+                '}';
+    }
 }

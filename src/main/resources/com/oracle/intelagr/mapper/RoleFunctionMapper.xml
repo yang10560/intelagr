@@ -8,6 +8,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="updateRoleCodeByOldRoleCode" parameterType="java.util.Map">
 		update m_rolefunctionmap set RoleCode = #{roleCode} where RoleCode = #{oldRoleCode}
 	</update>
+	
+	<select id="getFunctionCodeByRoleCode" resultType="String">
+		select FunctionCode from m_rolefunctionmap where DeleteFlag = 'N' and RoleCode = #{roleCode}
+	</select>
 
 
 

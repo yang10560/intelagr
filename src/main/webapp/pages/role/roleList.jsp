@@ -244,7 +244,7 @@
             height: 450,
             closed: false,
             cache: false,
-            href: 'roleAuth.html?id=' + id,
+            href: '<%=APP_PATH%>/role/roleAuth?id=' + id,
             modal: true
         });
     }

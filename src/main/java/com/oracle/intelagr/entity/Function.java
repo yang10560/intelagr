@@ -92,4 +92,20 @@ public class Function extends BaseEntity
 	public void setFunctionIcon(String functionIcon) {
 		this.functionIcon = functionIcon;
 	}
+
+
+	@Override
+	public String toString() {
+		return "Function{" +
+				"id=" + id +
+				", moduleCode='" + moduleCode + '\'' +
+				", moduleName='" + moduleName + '\'' +
+				", moduleDispSeq=" + moduleDispSeq +
+				", functionCode='" + functionCode + '\'' +
+				", functionName='" + functionName + '\'' +
+				", functionDispSeq=" + functionDispSeq +
+				", functionURL='" + functionURL + '\'' +
+				", functionIcon='" + functionIcon + '\'' +
+				'}';
+	}
 }
